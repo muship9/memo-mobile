@@ -1,3 +1,7 @@
+# memo-mobile
+個人用 memo を閲覧 / 編集する PWA
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
