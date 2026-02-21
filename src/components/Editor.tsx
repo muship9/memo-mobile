@@ -23,7 +23,7 @@ export default function Editor() {
         justify="space-between"
         align="center"
       >
-        <Button onClick={handleBack} colorScheme="gray" size="sm">
+        <Button onClick={handleBack} background="#718096" color="white" size="sm" px={3} _hover={{ background: "#4a5568" }}>
           ← Back
         </Button>
         <Text fontSize="lg" fontWeight="bold" flex={1} textAlign="center">
@@ -31,10 +31,13 @@ export default function Editor() {
         </Text>
         <Button 
           onClick={handleSave} 
-          colorScheme="green"
+          background="#38a169"
+          color="white"
           size="sm"
+          px={3}
           disabled={!canSave}
           loading={isSaving}
+          _hover={{ background: "#2f855a" }}
         >
           {hasChanges ? '保存 *' : '保存'}
         </Button>

@@ -66,7 +66,7 @@ export default function FileList() {
           Files
         </Heading>
         <Flex gap={3}>
-          <Button onClick={handleNewFile} colorScheme="blue" size="sm" px={3}>
+          <Button onClick={handleNewFile} background="#3182ce" color="white" size="sm" px={3} _hover={{ background: "#2c5282" }}>
             + New
           </Button>
           <Button 
@@ -74,10 +74,13 @@ export default function FileList() {
             size="sm" 
             disabled={refreshing}
             px={3}
+            background="#4299e1"
+            color="white"
+            _hover={{ background: "#3182ce" }}
           >
-            {refreshing ? '更新中' : '🔄'}
+            {refreshing ? '更新中' : '更新'}
           </Button>
-          <Button onClick={handleLogout} colorScheme="red" size="sm" px={3}>
+          <Button onClick={handleLogout} background="#e53e3e" color="white" size="sm" px={3} _hover={{ background: "#c53030" }}>
             Logout
           </Button>
         </Flex>
@@ -101,7 +104,7 @@ export default function FileList() {
         {fileTree.length === 0 ? (
           <Box p={10} textAlign="center">
             <Text color="gray.500" mb={4}>No files found</Text>
-            <Button onClick={handleNewFile} colorScheme="blue">
+            <Button onClick={handleNewFile} background="#3182ce" color="white" _hover={{ background: "#2c5282" }}>
               Create your first file
             </Button>
           </Box>
