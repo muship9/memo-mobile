@@ -1,77 +1,85 @@
 # memo-mobile
-個人用 memo を閲覧 / 編集する PWA
 
+個人用メモを閲覧・編集する PWA アプリケーション
 
-# React + TypeScript + Vite
+## 概要
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+memo-mobile は、GitHub リポジトリに保存されたマークダウンファイルを管理できる PWA（Progressive Web App）です。モバイルデバイスでの使用を想定した、シンプルで直感的なインターフェースを提供します。
 
-Currently, two official plugins are available:
+## 主な機能
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 📝 マークダウンファイルの作成、編集、削除
+- 📁 階層フォルダー構造の表示・管理
+- 🔍 ファイル検索・フィルタリング
+- 🌐 GitHub API を通じたリポジトリ連携
+- 📱 レスポンシブデザイン（モバイルファースト）
+- ⚡ オフライン対応（PWA）
 
-## React Compiler
+## 技術スタック
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **フロントエンド**: React 18 + TypeScript
+- **ビルドツール**: Vite
+- **状態管理**: Context API + useReducer
+- **スタイリング**: CSS Modules
+- **API**: GitHub REST API
+- **PWA**: Vite PWA Plugin
 
-## Expanding the ESLint configuration
+## セットアップ
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 1. 依存関係のインストール
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+bun install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. 環境変数の設定
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+`.env` ファイルを作成し、GitHub Personal Access Token を設定してください：
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```env
+VITE_GITHUB_TOKEN=your_personal_access_token_here
 ```
+
+GitHub Personal Access Token は以下の権限が必要です：
+- `repo` (プライベートリポジトリにアクセスする場合)
+- `public_repo` (パブリックリポジトリのみの場合)
+
+### 3. 開発サーバーの起動
+
+```bash
+bun run dev
+```
+
+### 4. ビルド
+
+```bash
+bun run build
+```
+
+## 使用方法
+
+1. アプリケーションを開く
+2. GitHub のユーザー名とリポジトリ名を入力
+3. Personal Access Token を設定
+4. ファイル一覧からメモを選択して編集
+
+## アーキテクチャ
+
+本アプリケーションは3層アーキテクチャで構成されています：
+
+- **API層**: GitHub API との通信を担当
+- **ビジネスロジック層**: アプリケーションの状態管理とロジック
+- **UI層**: React コンポーネントによる表示
+
+## 開発
+
+### リント・型チェック
+
+```bash
+bun run lint
+bun run typecheck
+```
+
+### PWA として使用
+
+ビルド後、対応ブラウザでアクセスすると「ホーム画面に追加」オプションが表示されます。
