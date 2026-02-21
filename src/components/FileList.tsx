@@ -66,17 +66,18 @@ export default function FileList() {
           Files
         </Heading>
         <Flex gap={3}>
-          <Button onClick={handleNewFile} colorScheme="blue" size="sm">
+          <Button onClick={handleNewFile} colorScheme="blue" size="sm" px={3}>
             + New
           </Button>
           <Button 
             onClick={refreshFileTree} 
             size="sm" 
             disabled={refreshing}
+            px={3}
           >
             {refreshing ? '更新中' : '🔄'}
           </Button>
-          <Button onClick={handleLogout} colorScheme="gray" size="sm">
+          <Button onClick={handleLogout} colorScheme="red" size="sm" px={3}>
             Logout
           </Button>
         </Flex>
@@ -88,7 +89,15 @@ export default function FileList() {
         </Box>
       )}
       
-      <Box flex={1} overflowY="auto" py={2}>
+      <Box 
+        flex={1} 
+        overflowY="auto" 
+        py={2}
+        css={{
+          WebkitOverflowScrolling: 'touch',
+          overscrollBehavior: 'contain'
+        }}
+      >
         {fileTree.length === 0 ? (
           <Box p={10} textAlign="center">
             <Text color="gray.500" mb={4}>No files found</Text>
