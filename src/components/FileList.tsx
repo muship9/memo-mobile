@@ -1,3 +1,4 @@
+import { Box, Flex, Heading, Button, Text } from '@chakra-ui/react'
 import { useNb } from '../hooks/useNb'
 import { useFileTree } from '../hooks/useFileTree'
 import type { FileTreeItem } from '../types'
@@ -20,155 +21,95 @@ export default function FileList() {
     const children = folderMap.get(item.path) || []
     
     return (
-      <div key={item.path}>
-        <div 
+      <Box key={item.path}>
+        <Flex
           onClick={() => handleFileClick(item)}
-          style={{
-            ...styles.item,
-            paddingLeft: `${20 + level * 20}px`,
-          }}
+          p={3}
+          pl={`${20 + level * 20}px`}
+          cursor="pointer"
+          align="center"
+          _hover={{ bg: 'gray.100' }}
+          transition="background-color 0.2s"
         >
-          <span style={styles.icon}>
+          <Text mr={3} fontSize="lg">
             {item.type === 'folder' ? (expanded ? '📂' : '📁') : '📄'}
-          </span>
-          <span style={styles.name}>{item.name}</span>
+          </Text>
+          <Text flex={1} fontSize="sm">
+            {item.name}
+          </Text>
           {item.size !== undefined && (
-            <span style={styles.size}>
+            <Text fontSize="xs" color="gray.500">
               {(item.size / 1024).toFixed(1)} KB
-            </span>
+            </Text>
           )}
-        </div>
+        </Flex>
         {item.type === 'folder' && expanded && (
-          <div>
+          <Box>
             {children.map((child: FileTreeItem) => renderItem(child, level + 1))}
-          </div>
+          </Box>
         )}
-      </div>
+      </Box>
     )
   }
 
 
   return (
-    <div style={styles.container}>
-      <div style={styles.header}>
-        <h1 style={styles.title}>Files</h1>
-        <div style={styles.actions}>
-          <button onClick={handleNewFile} style={styles.button}>
+    <Box minH="100vh" display="flex" flexDirection="column">
+      <Flex
+        p={4}
+        borderBottom="1px solid"
+        borderColor="gray.200"
+        justify="space-between"
+        align="center"
+      >
+        <Heading as="h1" size="md">
+          Files
+        </Heading>
+        <Flex gap={3}>
+          <Button onClick={handleNewFile} colorScheme="blue" size="sm" px={3}>
             + New
-          </button>
-          <button onClick={refreshFileTree} style={styles.button} disabled={refreshing}>
-            {refreshing ? '更新中...' : '🔄'}
-          </button>
-          <button onClick={handleLogout} style={styles.logoutButton}>
+          </Button>
+          <Button 
+            onClick={refreshFileTree} 
+            size="sm" 
+            disabled={refreshing}
+            px={3}
+          >
+            {refreshing ? '更新中' : '🔄'}
+          </Button>
+          <Button onClick={handleLogout} colorScheme="red" size="sm" px={3}>
             Logout
-          </button>
-        </div>
-      </div>
+          </Button>
+        </Flex>
+      </Flex>
       
       {error && (
-        <div style={styles.error}>
-          {error}
-        </div>
+        <Box bg="red.100" color="red.800" p={3}>
+          <Text>{error}</Text>
+        </Box>
       )}
       
-      <div style={styles.list}>
+      <Box 
+        flex={1} 
+        overflowY="auto" 
+        py={2}
+        css={{
+          WebkitOverflowScrolling: 'touch',
+          overscrollBehavior: 'contain'
+        }}
+      >
         {fileTree.length === 0 ? (
-          <div style={styles.empty}>
-            <p>No files found</p>
-            <button onClick={handleNewFile} style={styles.button}>
+          <Box p={10} textAlign="center">
+            <Text color="gray.500" mb={4}>No files found</Text>
+            <Button onClick={handleNewFile} colorScheme="blue">
               Create your first file
-            </button>
-          </div>
+            </Button>
+          </Box>
         ) : (
           rootItems.map(item => renderItem(item, 0))
         )}
-      </div>
-    </div>
+      </Box>
+    </Box>
   )
 }
 
-const styles: Record<string, React.CSSProperties> = {
-  container: {
-    height: '100vh',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  header: {
-    padding: '15px 20px',
-    borderBottom: '1px solid #e0e0e0',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  title: {
-    margin: 0,
-    fontSize: '20px',
-  },
-  actions: {
-    display: 'flex',
-    gap: '10px',
-  },
-  button: {
-    padding: '6px 12px',
-    backgroundColor: '#007bff',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    fontSize: '14px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    minWidth: '60px',
-  },
-  logoutButton: {
-    padding: '6px 12px',
-    backgroundColor: '#dc3545',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    fontSize: '14px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    minWidth: '60px',
-  },
-  error: {
-    padding: '10px 20px',
-    backgroundColor: '#f8d7da',
-    color: '#721c24',
-    borderBottom: '1px solid #f5c6cb',
-  },
-  list: {
-    flex: 1,
-    overflow: 'auto',
-    WebkitOverflowScrolling: 'touch' as any,
-    overscrollBehavior: 'contain',
-    padding: '10px 0',
-  },
-  item: {
-    padding: '10px 20px',
-    cursor: 'pointer',
-    display: 'flex',
-    alignItems: 'center',
-    transition: 'background-color 0.2s',
-  },
-  icon: {
-    marginRight: '10px',
-    fontSize: '16px',
-  },
-  name: {
-    flex: 1,
-    fontSize: '14px',
-  },
-  size: {
-    fontSize: '12px',
-    color: '#666',
-  },
-  empty: {
-    padding: '40px',
-    textAlign: 'center',
-    color: '#666',
-  },
-}
