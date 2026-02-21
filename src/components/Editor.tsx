@@ -1,3 +1,4 @@
+import { Box, Flex, Button, Text, Textarea, Badge } from '@chakra-ui/react'
 import { useFileEditor } from '../hooks/useFileEditor'
 
 export default function Editor() {
@@ -14,123 +15,74 @@ export default function Editor() {
   } = useFileEditor()
 
   return (
-    <div style={styles.container}>
-      <div style={styles.header}>
-        <button onClick={handleBack} style={styles.backButton}>
+    <Box minH="100vh" display="flex" flexDirection="column">
+      <Flex
+        p={3}
+        borderBottom="1px solid"
+        borderColor="gray.200"
+        justify="space-between"
+        align="center"
+      >
+        <Button onClick={handleBack} colorScheme="gray" size="sm">
           ← Back
-        </button>
-        <span style={styles.fileName}>{getFileName()}</span>
-        <button 
+        </Button>
+        <Text fontSize="lg" fontWeight="bold" flex={1} textAlign="center">
+          {getFileName()}
+        </Text>
+        <Button 
           onClick={handleSave} 
-          style={{
-            ...styles.saveButton,
-            opacity: canSave ? 1 : 0.5,
-            cursor: canSave ? 'pointer' : 'not-allowed',
-          }}
+          colorScheme="green"
+          size="sm"
           disabled={!canSave}
+          loading={isSaving}
         >
-          {isSaving ? '保存中...' : hasChanges ? '保存 *' : '保存'}
-        </button>
-      </div>
+          {hasChanges ? '保存 *' : '保存'}
+        </Button>
+      </Flex>
       
-      <div style={styles.pathBar}>
-        <span style={styles.path}>{getFilePath()}</span>
-      </div>
+      <Box p={2} bg="gray.50" borderBottom="1px solid" borderColor="gray.200">
+        <Text fontSize="xs" color="gray.600" fontFamily="mono">
+          {getFilePath()}
+        </Text>
+      </Box>
       
-      <div style={styles.editorWrapper}>
-        <textarea
+      <Box flex={1} display="flex">
+        <Textarea
           value={editedContent}
           onChange={(e) => setEditedContent(e.target.value)}
-          style={styles.editor}
           placeholder="Type your content here..."
           spellCheck={false}
           disabled={isSaving}
+          flex={1}
+          fontFamily="mono"
+          fontSize="sm"
+          lineHeight={1.6}
+          resize="none"
+          border="none"
+          borderRadius={0}
+          _focus={{ boxShadow: 'none' }}
+          p={5}
         />
-      </div>
+      </Box>
       
-      <div style={styles.statusBar}>
-        <span>{editedContent.length} characters</span>
-        <span>{editedContent.split('\n').length} lines</span>
-        {hasChanges && <span style={styles.unsaved}>● Unsaved changes</span>}
-      </div>
-    </div>
+      <Flex
+        p={3}
+        borderTop="1px solid"
+        borderColor="gray.200"
+        bg="gray.50"
+        fontSize="xs"
+        color="gray.600"
+        gap={5}
+      >
+        <Text>{editedContent.length} characters</Text>
+        <Text>{editedContent.split('\n').length} lines</Text>
+        {hasChanges && (
+          <Badge colorScheme="red" ml="auto">
+            ● Unsaved changes
+          </Badge>
+        )}
+      </Flex>
+    </Box>
   )
 }
 
-const styles: Record<string, React.CSSProperties> = {
-  container: {
-    height: '100vh',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  header: {
-    padding: '10px 20px',
-    borderBottom: '1px solid #e0e0e0',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  backButton: {
-    padding: '8px 16px',
-    backgroundColor: '#6c757d',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    fontSize: '14px',
-  },
-  fileName: {
-    fontSize: '16px',
-    fontWeight: 'bold',
-    flex: 1,
-    textAlign: 'center',
-  },
-  saveButton: {
-    padding: '8px 20px',
-    backgroundColor: '#28a745',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    fontSize: '14px',
-  },
-  pathBar: {
-    padding: '8px 20px',
-    backgroundColor: '#f8f9fa',
-    borderBottom: '1px solid #e0e0e0',
-  },
-  path: {
-    fontSize: '12px',
-    color: '#666',
-    fontFamily: 'monospace',
-  },
-  editorWrapper: {
-    flex: 1,
-    display: 'flex',
-    overflow: 'hidden',
-  },
-  editor: {
-    flex: 1,
-    padding: '20px',
-    border: 'none',
-    outline: 'none',
-    fontFamily: 'monospace',
-    fontSize: '14px',
-    lineHeight: '1.6',
-    resize: 'none',
-    backgroundColor: '#ffffff',
-  },
-  statusBar: {
-    padding: '10px 20px',
-    borderTop: '1px solid #e0e0e0',
-    backgroundColor: '#f8f9fa',
-    display: 'flex',
-    gap: '20px',
-    fontSize: '12px',
-    color: '#666',
-  },
-  unsaved: {
-    color: '#dc3545',
-    marginLeft: 'auto',
-  },
-}
