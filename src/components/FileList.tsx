@@ -6,8 +6,6 @@ import type { FileTreeItem } from '../types'
 export default function FileList() {
   const { error, fileTree } = useNb()
   const {
-    refreshing,
-    refreshFileTree,
     handleFileClick,
     handleNewFile,
     handleLogout,
