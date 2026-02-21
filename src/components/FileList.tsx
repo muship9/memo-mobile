@@ -52,7 +52,7 @@ export default function FileList() {
 
 
   return (
-    <Box minH="100vh" display="flex" flexDirection="column">
+    <Box height="100vh" display="flex" flexDirection="column" overflow="hidden">
       <Flex
         p={4}
         borderBottom="1px solid"
