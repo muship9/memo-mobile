@@ -91,7 +91,7 @@ export default function FileList() {
         {fileTree.length === 0 ? (
           <Box p={10} textAlign="center">
             <Text color="gray.500" mb={4}>No files found</Text>
-            <Button onClick={handleNewFile} background="#3182ce" color="white" _hover={{ background: "#2c5282" }}>
+            <Button onClick={handleNewFile} background="#3182ce" color="white" px={3} _hover={{ background: "#2c5282" }}>
               Create your first file
             </Button>
           </Box>

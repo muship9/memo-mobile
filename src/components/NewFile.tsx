@@ -57,6 +57,7 @@ export default function NewFile() {
               border="1px solid #3182ce"
               color="#3182ce"
               size="sm"
+              px={3}
               _hover={{ background: "#ebf8ff" }}
             >
               {template.name}
