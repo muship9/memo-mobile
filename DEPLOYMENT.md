@@ -25,20 +25,12 @@ GITHUB_TOKEN=ghp_your_token_here
 NODE_ENV=development
 ```
 
-### 3. GitHub Actions用シークレット設定
-GitHubリポジトリの Settings > Secrets and variables > Actions で以下を追加:
+### 3. 自動デプロイの仕組み
+Vercelがリポジトリと連携することで自動デプロイが実行されます:
 
-```
-VERCEL_TOKEN=your_vercel_token
-ORG_ID=your_vercel_org_id
-PROJECT_ID=your_vercel_project_id
-TEAM_ID=your_vercel_team_id (チームの場合)
-```
-
-#### シークレット値の取得方法:
-- **VERCEL_TOKEN**: [Vercel Settings > Tokens](https://vercel.com/account/tokens) で作成
-- **ORG_ID**: Vercel CLI で `vercel org ls` または `vercel project ls` で確認
-- **PROJECT_ID**: Vercel CLI で `vercel project ls` で確認
+- GitHub Actionsは不要 - VercelのGitHub統合を利用
+- 必要な環境変数はVercel側のみで管理
+- シンプルで安全な構成
 
 ### 4. 自動デプロイメント動作
 
@@ -72,7 +64,7 @@ vercel --prod
 プロジェクトルートの `vercel.json` でビルド設定とデプロイ条件を管理。
 
 ### GitHub Actions
-`.github/workflows/deploy.yml` で自動デプロイワークフローを定義。
+`.github/workflows/ci.yml` で基本的なCI（lint, typecheck, build）を実行。デプロイはVercelが自動で行います。
 
 ## トラブルシューティング
 
