@@ -25,7 +25,7 @@ export default function NewFile() {
         justify="space-between"
         align="center"
       >
-        <Button onClick={handleCancel} colorScheme="gray" size="sm">
+        <Button onClick={handleCancel} background="#718096" color="white" size="sm" px={3} _hover={{ background: "#4a5568" }}>
           ← Cancel
         </Button>
         <Text fontSize="lg" fontWeight="bold">
@@ -33,9 +33,12 @@ export default function NewFile() {
         </Text>
         <Button 
           onClick={handleCreate} 
-          colorScheme="green"
+          background="#38a169"
+          color="white"
           size="sm"
+          px={3}
           loading={isCreating}
+          _hover={{ background: "#2f855a" }}
         >
           作成
         </Button>
@@ -50,9 +53,12 @@ export default function NewFile() {
             <Button 
               key={template.type}
               onClick={() => applyTemplate(template.type)} 
-              variant="outline"
-              colorScheme="blue"
+              background="transparent"
+              border="1px solid #3182ce"
+              color="#3182ce"
               size="sm"
+              px={3}
+              _hover={{ background: "#ebf8ff" }}
             >
               {template.name}
             </Button>

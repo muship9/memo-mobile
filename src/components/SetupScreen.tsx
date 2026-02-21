@@ -58,10 +58,12 @@ export default function SetupScreen() {
 
         <Button 
           onClick={handleSave}
-          colorScheme="blue"
+          background="#3182ce"
+          color="white"
           size="lg"
           width="full"
           disabled={isValidating}
+          _hover={{ background: "#2c5282" }}
         >
           {isValidating ? '確認中' : '保存'}
         </Button>

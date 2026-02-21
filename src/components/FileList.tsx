@@ -6,8 +6,6 @@ import type { FileTreeItem } from '../types'
 export default function FileList() {
   const { error, fileTree } = useNb()
   const {
-    refreshing,
-    refreshFileTree,
     handleFileClick,
     handleNewFile,
     handleLogout,
@@ -66,18 +64,10 @@ export default function FileList() {
           Files
         </Heading>
         <Flex gap={3}>
-          <Button onClick={handleNewFile} colorScheme="blue" size="sm" px={3}>
+          <Button onClick={handleNewFile} background="#3182ce" color="white" size="sm" px={3} _hover={{ background: "#2c5282" }}>
             + New
           </Button>
-          <Button 
-            onClick={refreshFileTree} 
-            size="sm" 
-            disabled={refreshing}
-            px={3}
-          >
-            {refreshing ? '更新中' : '🔄'}
-          </Button>
-          <Button onClick={handleLogout} colorScheme="red" size="sm" px={3}>
+          <Button onClick={handleLogout} background="#e53e3e" color="white" size="sm" px={3} _hover={{ background: "#c53030" }}>
             Logout
           </Button>
         </Flex>
@@ -101,7 +91,7 @@ export default function FileList() {
         {fileTree.length === 0 ? (
           <Box p={10} textAlign="center">
             <Text color="gray.500" mb={4}>No files found</Text>
-            <Button onClick={handleNewFile} colorScheme="blue">
+            <Button onClick={handleNewFile} background="#3182ce" color="white" px={3} _hover={{ background: "#2c5282" }}>
               Create your first file
             </Button>
           </Box>
