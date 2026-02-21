@@ -1,3 +1,4 @@
+import { Box, Heading, VStack, Input, Button, Text } from '@chakra-ui/react'
 import { useGitHubSetup } from '../hooks/useGitHubSetup'
 
 export default function SetupScreen() {
@@ -13,125 +14,72 @@ export default function SetupScreen() {
   } = useGitHubSetup()
 
   return (
-    <div className="setup-screen" style={styles.container}>
-      <h1 style={styles.title}>nb Mobile Setup</h1>
+    <Box p={6} maxW="500px" mx="auto" minH="100vh">
+      <Heading as="h1" size="lg" textAlign="center" mb={8}>
+        nb Mobile Setup
+      </Heading>
       
-      <div style={styles.formGroup}>
-        <label htmlFor="token" style={styles.label}>
-          GitHub Token:
-        </label>
-        <input
-          id="token"
-          type="password"
-          value={token}
-          onChange={(e) => setToken(e.target.value)}
-          placeholder="ghp_xxxxxxxxxxxx"
-          style={{
-            ...styles.input,
-            borderColor: tokenError ? '#dc3545' : '#ddd'
-          }}
+      <VStack gap={6}>
+        <Box>
+          <Text fontSize="sm" fontWeight="bold" mb={2}>GitHub Token:</Text>
+          <Input
+            id="token"
+            type="password"
+            value={token}
+            onChange={(e) => setToken(e.target.value)}
+            placeholder="ghp_xxxxxxxxxxxx"
+            disabled={isValidating}
+            size="lg"
+          />
+          {tokenError && (
+            <Box bg="red.100" color="red.800" p={2} mt={2} borderRadius="md">
+              <Text fontSize="sm">{tokenError}</Text>
+            </Box>
+          )}
+        </Box>
+
+        <Box>
+          <Text fontSize="sm" fontWeight="bold" mb={2}>Repository:</Text>
+          <Input
+            id="repo"
+            type="text"
+            value={repo}
+            onChange={(e) => setRepo(e.target.value)}
+            placeholder="username/repository-name"
+            disabled={isValidating}
+            size="lg"
+          />
+          {repoError && (
+            <Box bg="red.100" color="red.800" p={2} mt={2} borderRadius="md">
+              <Text fontSize="sm">{repoError}</Text>
+            </Box>
+          )}
+        </Box>
+
+        <Button 
+          onClick={handleSave}
+          colorScheme="blue"
+          size="lg"
+          width="full"
           disabled={isValidating}
-        />
-        {tokenError && (
-          <div style={styles.errorText}>{tokenError}</div>
-        )}
-      </div>
+        >
+          {isValidating ? '確認中' : '保存'}
+        </Button>
 
-      <div style={styles.formGroup}>
-        <label htmlFor="repo" style={styles.label}>
-          Repository:
-        </label>
-        <input
-          id="repo"
-          type="text"
-          value={repo}
-          onChange={(e) => setRepo(e.target.value)}
-          placeholder="username/repository-name"
-          style={{
-            ...styles.input,
-            borderColor: repoError ? '#dc3545' : '#ddd'
-          }}
-          disabled={isValidating}
-        />
-        {repoError && (
-          <div style={styles.errorText}>{repoError}</div>
-        )}
-      </div>
-
-      <button 
-        onClick={handleSave}
-        style={{
-          ...styles.button,
-          opacity: isValidating ? 0.6 : 1,
-          cursor: isValidating ? 'not-allowed' : 'pointer',
-        }}
-        disabled={isValidating}
-      >
-        {isValidating ? '確認中...' : '保存'}
-      </button>
-
-      <div style={styles.help}>
-        <h3>GitHub Token の作成方法：</h3>
-        <ol>
-          <li>GitHub Settings → Developer settings</li>
-          <li>Personal access tokens → Tokens (classic)</li>
-          <li>「Generate new token (classic)」</li>
-          <li>「repo」スコープにチェック</li>
-          <li>「Generate token」をクリック</li>
-        </ol>
-      </div>
-    </div>
+        <Box bg="gray.50" p={6} borderRadius="md" width="full">
+          <Heading as="h3" size="md" mb={4}>
+            GitHub Token の作成方法：
+          </Heading>
+          <VStack align="start" gap={1} fontSize="sm">
+            <Text>1. GitHub Settings → Developer settings</Text>
+            <Text>2. Personal access tokens → Tokens (classic)</Text>
+            <Text>3. 「Generate new token (classic)」</Text>
+            <Text>4. 「repo」スコープにチェック</Text>
+            <Text>5. 「Generate token」をクリック</Text>
+          </VStack>
+        </Box>
+      </VStack>
+    </Box>
   )
 }
 
-const styles: Record<string, React.CSSProperties> = {
-  container: {
-    padding: '20px',
-    maxWidth: '500px',
-    margin: '0 auto',
-  },
-  title: {
-    fontSize: '24px',
-    marginBottom: '30px',
-    textAlign: 'center',
-  },
-  formGroup: {
-    marginBottom: '20px',
-  },
-  label: {
-    display: 'block',
-    marginBottom: '8px',
-    fontWeight: 'bold',
-  },
-  input: {
-    width: '100%',
-    padding: '10px',
-    fontSize: '16px',
-    border: '1px solid #ddd',
-    borderRadius: '4px',
-    boxSizing: 'border-box',
-  },
-  button: {
-    width: '100%',
-    padding: '12px',
-    fontSize: '16px',
-    backgroundColor: '#007bff',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    marginTop: '10px',
-  },
-  help: {
-    marginTop: '40px',
-    padding: '20px',
-    backgroundColor: '#f8f9fa',
-    borderRadius: '8px',
-    fontSize: '14px',
-    lineHeight: '1.6',
-  },
-  errorText: {
-    color: '#dc3545',
-    fontSize: '12px',
-    marginTop: '5px',
-  },
-}
