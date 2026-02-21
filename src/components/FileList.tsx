@@ -69,17 +69,6 @@ export default function FileList() {
           <Button onClick={handleNewFile} background="#3182ce" color="white" size="sm" px={3} _hover={{ background: "#2c5282" }}>
             + New
           </Button>
-          <Button 
-            onClick={refreshFileTree} 
-            size="sm" 
-            disabled={refreshing}
-            px={3}
-            background="#4299e1"
-            color="white"
-            _hover={{ background: "#3182ce" }}
-          >
-            {refreshing ? '更新中' : '更新'}
-          </Button>
           <Button onClick={handleLogout} background="#e53e3e" color="white" size="sm" px={3} _hover={{ background: "#c53030" }}>
             Logout
           </Button>
