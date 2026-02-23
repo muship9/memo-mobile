@@ -61,12 +61,8 @@ export const createGitHubFilesApi = (token: string, repo: string) => {
       const apiPath = `/repos/${repo}/contents/${normalizedPath}`
       const data = await client.get<GitHubFileResponse>(apiPath)
       
-      if (!data.content) {
-        throw new Error('ファイル内容が見つかりません')
-      }
-      
-      // UTF-8安全なBase64デコード
-      const content = decodeBase64Content(data.content)
+      // 空ファイルの場合、contentが存在しないか空なので空文字列として扱う
+      const content = data.content ? decodeBase64Content(data.content) : ''
       
       return {
         content,
